@@ -1,5 +1,10 @@
 #include "CLoaderShapesFromTextFile.h"
 
+CLoaderShapesFromTextFile::CLoaderShapesFromTextFile(CCanvas* canvas)
+    :CLoaderShapesFromFile(canvas)
+{
+}
+
 void CLoaderShapesFromTextFile::Load(const std::string& fileName)
 {
     this->LoadShapesFromFile(fileName);

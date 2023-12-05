@@ -5,21 +5,27 @@
 #include "CState.h"
 #include "CCanvas.h"
 #include "ShapeStyle.h"
+
 #include "CChangeCoordinatesOfShapeCommand.h"
 #include "CChangeOutlineThicknessCommand.h"
 #include "CChangeShapeColorCommand.h"
 #include "CChangeShapeOutlineColorCommand.h"
+
 #include "CSetColorCommand.h"
 #include "CSetThicknessCommand.h"
+
 #include "CCircleCreateCommand.h"
 #include "CRectangleCreateCommand.h"
 #include "CTriangleCreateCommand.h"
+
 #include "CUndoCommand.h"
+
 #include "ISaveFileStrategy.h"
 #include "CSaveShapesToFileCommand.h"
 #include "CSaveToBinFile.h"
 #include "CSaveToTextFile.h"
 #include "CFileSaver.h"
+
 #include "CLoaderShapesFromTextFile.h"
 #include "CLoaderShapesFromBinaryFile.h"
 #include "CLoadShapesFromBinFileCommand.h"
@@ -55,8 +61,8 @@ public:
     vector<CButton*> GetButtons() const;
 
     void Undo();
-
     void Save(const std::string& fileName, ISaveFileStrategy* strategy);
+
     void LoadFromTextFile(const std::string& fileName);
     void LoadFromBinFile(const std::string& fileName);
 
@@ -68,6 +74,7 @@ private:
     CCanvas* m_canvas;
     sf::Color m_selectedColor = sf::Color::Red;
     float m_selectedThickness = 1;
+
     CFileSaver* m_fileSaver;
     CLoaderShapesFromTextFile* m_textLoader;
     CLoaderShapesFromBinaryFile* m_binLoader;

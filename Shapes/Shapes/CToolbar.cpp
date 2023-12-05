@@ -20,7 +20,9 @@ CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas, CFi
     : m_window(window),
     m_state(state),
     m_canvas(canvas),
-    m_fileSaver(fileSaver)
+    m_fileSaver(fileSaver),
+    m_textLoader(new CLoaderShapesFromTextFile(m_canvas)),
+    m_binLoader(new CLoaderShapesFromBinaryFile(m_canvas))
 {
     m_buttons.push_back(new CButton(
         "coordinates",

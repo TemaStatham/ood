@@ -2,21 +2,21 @@
 #include "CChangeCoordinatesOfShapeState.h"
 #include <typeinfo>
 
-CApplication::CApplication(std::string& fileName, ostream& output, sf::RenderWindow& window)
-    : m_fileName(fileName),
+CApplication::CApplication(istream& input, ostream& output, sf::RenderWindow& window)
+    : m_in(input),
     m_out(output),
     m_window(window)
 {
-    m_canvas = new CCanvas(window);
+    m_canvas = new CCanvas(window, m_in);
     m_toolbar = new CToolbar(window, new CChangeCoordinatesOfShapeState(), m_canvas, new CFileSaver(m_canvas));
 }
 
 CApplication* CApplication::m_instance = nullptr;
 
-CApplication* CApplication::GetInstance(std::string& fileName, std::ostream& output, sf::RenderWindow& window)
+CApplication* CApplication::GetInstance(std::istream& input, std::ostream& output, sf::RenderWindow& window)
 {
     if (m_instance == nullptr) {
-        m_instance = new CApplication(fileName, output, window);
+        m_instance = new CApplication(input, output, window);
     }
 
     return m_instance;
@@ -24,7 +24,7 @@ CApplication* CApplication::GetInstance(std::string& fileName, std::ostream& out
 
 void CApplication::Read()
 {
-    /*std::string typeOfFigureAsString;
+    std::string typeOfFigureAsString;
 
     while (m_in >> typeOfFigureAsString)
     {
@@ -39,8 +39,7 @@ void CApplication::Read()
             std::string garbage;
             getline(m_in, garbage);
         }
-    }*/
-    m_loader->LoadShapesFromFile(m_fileName);
+    }
 }
 void CApplication::Write()
 {

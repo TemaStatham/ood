@@ -7,9 +7,10 @@ const std::string STR_REGEX_POINT = "P([0-9])=(\\d+),(\\d+);";
 const std::string STR_REGEX_CENTER_OF_CIRLCE = "C=(-?\\d+),(-?\\d+);";
 const std::string STR_REGEX_RADIUS_OF_CIRLCE = "R=(\\d+);";
 
-CCanvas::CCanvas(sf::RenderWindow& window)
-    :m_window(window)
-    /*m_actionMap({
+CCanvas::CCanvas(sf::RenderWindow& window, std::istream& in)
+    :m_window(window),
+    m_in(in),
+    m_actionMap({
           { "TRIANGLE:", [this]() {
                return ReadTriangleProperties();
            } },
@@ -19,7 +20,7 @@ CCanvas::CCanvas(sf::RenderWindow& window)
           { "CIRCLE:", [this]() {
                return ReadCircleProperties();
            } },
-        })*/
+        })
 {
 }
 
@@ -31,17 +32,17 @@ void CCanvas::Draw()
     }
 }
 
-//void CCanvas::CreateShape(const std::string& typeOfFigureAsString)
-//{
-//    auto it = m_actionMap.find(typeOfFigureAsString);
-//
-//    if (it != m_actionMap.end())
-//    {
-//        return it->second();
-//    }
-//
-//    throw std::invalid_argument("Invalid type of figure");
-//}
+void CCanvas::CreateShape(const std::string& typeOfFigureAsString)
+{
+    auto it = m_actionMap.find(typeOfFigureAsString);
+
+    if (it != m_actionMap.end())
+    {
+        return it->second();
+    }
+
+    throw std::invalid_argument("Invalid type of figure");
+}
 
 void CCanvas::CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style)
 {
@@ -276,12 +277,10 @@ void CCanvas::Accept(IVisitor* visitor)
         }
     }
 }
-
 void CCanvas::Backup()
 {
     m_history.push(new CMemento(m_shapes, m_selectedShapes));
 }
-
 void CCanvas::Undo()
 {
     if (m_history.size() == 0)
@@ -388,157 +387,157 @@ void CCanvas::ConfigureShape(std::shared_ptr<sf::Shape> shape, ShapeStyle* style
     shape->setFillColor(sf::Color(style->fillColor.r, style->fillColor.g, style->fillColor.b, 255));
 }
 
-//void CCanvas::ParseInputString(const std::string& input, float& pref, float& num1, float& num2)
-//{
-//  std::regex pattern(STR_REGEX_POINT);
-//
-//  std::smatch match;
-//  if (!(std::regex_search(input, match, pattern))) {
-//      std::cout << "Error regex search" << std::endl;
-//      return;
-//  }
-//
-//  if (match.size() != 4) {
-//      std::cout << "Error match size" << std::endl;
-//      return;
-//  }
-//
-//  pref = std::stof(match[1]);
-//  num1 = std::stof(match[2]);
-//  num2 = std::stof(match[3]);
-//}
-//
-//sf::Vector2f CCanvas::ParseCoordinate(const std::string& input)
-//{
-//  std::regex pattern(STR_REGEX_CENTER_OF_CIRLCE);
-//  std::smatch match;
-//
-//  if (std::regex_search(input, match, pattern)) {
-//      float x = std::stof(match[1]);
-//      float y = std::stof(match[2]);
-//      return sf::Vector2f(x, y);
-//  }
-//
-//  return sf::Vector2f(0, 0);
-//}
-//
-//float CCanvas::ParseRadius(const std::string& input)
-//{
-//  std::regex pattern(STR_REGEX_RADIUS_OF_CIRLCE);
-//  std::smatch match;
-//
-//  if (std::regex_search(input, match, pattern)) {
-//      float radius = std::stof(match[1]);
-//      return radius;
-//  }
-//
-//  return 0;
-//}
-//
-//void CCanvas::ReadCircleProperties()
-//{
-//  std::string c;
-//  float radius;
-//
-//  m_in >> c;
-//
-//  sf::Vector2f center = ParseCoordinate(c);
-//
-//  std::string r;
-//
-//  m_in >> r;
-//
-//  radius = ParseRadius(r);
-//  if (m_in.fail())
-//  {
-//      throw std::invalid_argument("Not enough arguments");
-//  }
-//
-//  if (radius < 0)
-//  {
-//      throw std::invalid_argument("Invalid radius param");
-//  }
-//
-//  char ch;
-//  m_in.get(ch);
-//  if (m_in.fail() || ch == '\n')
-//  {
-//      ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Blue };
-//      CreateCircle(center, radius, &style);
-//      return;
-//  }
-//
-//  throw std::invalid_argument("Too many arguments");
-//}
-//
-//void CCanvas::ReadRectangleProperties()
-//{
-//  std::vector<sf::Vector2f> rectanglePoints;
-//  for (int i = 0; i < COUNT_OF_RECTANGLE_POINTS; i++)
-//  {
-//      std::string inp;
-//      float pref, x, y;
-//
-//      m_in >> inp;
-//
-//      ParseInputString(inp, pref, x, y);
-//
-//      if (m_in.fail())
-//      {
-//          throw std::invalid_argument("Not enough arguments");
-//      }
-//      sf::Vector2f vec(x, y);
-//      rectanglePoints.push_back(vec);
-//  }
-//
-//  float width = rectanglePoints[1].x - rectanglePoints[0].x,
-//      height = rectanglePoints[1].y - rectanglePoints[0].y;
-//
-//  if (width < 0 || height < 0)
-//  {
-//      throw std::invalid_argument("Invalid width or height params");
-//  }
-//  char ch;
-//  m_in.get(ch);
-//  if (m_in.fail() || ch == '\n')
-//  {
-//      ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Blue };
-//      sf::Vector2f leftTop(rectanglePoints[0].x, rectanglePoints[0].y);
-//      CreateRectangle(leftTop, width, height, &style);
-//      return;
-//  }
-//
-//  throw std::invalid_argument("Too many arguments");
-//}
-//
-//void CCanvas::ReadTriangleProperties()
-//{
-//  std::vector<sf::Vector2f> trianglePoints;
-//  for (size_t i = 0; i < COUNT_OF_TRIANGLE_POINTS; i++)
-//  {
-//      std::string inp;
-//      float pref, x, y;
-//
-//      m_in >> inp;
-//
-//      ParseInputString(inp, pref, x, y);
-//
-//      if (m_in.fail())
-//      {
-//          throw std::invalid_argument("Not enough arguments");
-//      }
-//      sf::Vector2f vec(x, y);
-//      trianglePoints.push_back(vec);
-//  }
-//
-//  char ch;
-//  m_in.get(ch);
-//  if (m_in.fail() || ch == '\n')
-//  {
-//      ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Magenta };
-//      CreateTriangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], &style);
-//      return;
-//  }
-//
-//  throw std::invalid_argument("Too many arguments");
-//}
+void CCanvas::ParseInputString(const std::string& input, float& pref, float& num1, float& num2)
+{
+    std::regex pattern(STR_REGEX_POINT);
+
+    std::smatch match;
+    if (!(std::regex_search(input, match, pattern))) {
+        std::cout << "Error regex search" << std::endl;
+        return;
+    }
+
+    if (match.size() != 4) {
+        std::cout << "Error match size" << std::endl;
+        return;
+    }
+
+    pref = std::stof(match[1]);
+    num1 = std::stof(match[2]);
+    num2 = std::stof(match[3]);
+}
+
+sf::Vector2f CCanvas::ParseCoordinate(const std::string& input)
+{
+    std::regex pattern(STR_REGEX_CENTER_OF_CIRLCE);
+    std::smatch match;
+
+    if (std::regex_search(input, match, pattern)) {
+        float x = std::stof(match[1]);
+        float y = std::stof(match[2]);
+        return sf::Vector2f(x, y);
+    }
+
+    return sf::Vector2f(0, 0);
+}
+
+float CCanvas::ParseRadius(const std::string& input)
+{
+    std::regex pattern(STR_REGEX_RADIUS_OF_CIRLCE);
+    std::smatch match;
+
+    if (std::regex_search(input, match, pattern)) {
+        float radius = std::stof(match[1]);
+        return radius;
+    }
+
+    return 0;
+}
+
+void CCanvas::ReadCircleProperties()
+{
+    std::string c;
+    float radius;
+
+    m_in >> c;
+
+    sf::Vector2f center = ParseCoordinate(c);
+
+    std::string r;
+
+    m_in >> r;
+
+    radius = ParseRadius(r);
+    if (m_in.fail())
+    {
+        throw std::invalid_argument("Not enough arguments");
+    }
+
+    if (radius < 0)
+    {
+        throw std::invalid_argument("Invalid radius param");
+    }
+
+    char ch;
+    m_in.get(ch);
+    if (m_in.fail() || ch == '\n')
+    {
+        ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Blue };
+        CreateCircle(center, radius, &style);
+        return;
+    }
+
+    throw std::invalid_argument("Too many arguments");
+}
+
+void CCanvas::ReadRectangleProperties()
+{
+    std::vector<sf::Vector2f> rectanglePoints;
+    for (int i = 0; i < COUNT_OF_RECTANGLE_POINTS; i++)
+    {
+        std::string inp;
+        float pref, x, y;
+
+        m_in >> inp;
+
+        ParseInputString(inp, pref, x, y);
+
+        if (m_in.fail())
+        {
+            throw std::invalid_argument("Not enough arguments");
+        }
+        sf::Vector2f vec(x, y);
+        rectanglePoints.push_back(vec);
+    }
+
+    float width = rectanglePoints[1].x - rectanglePoints[0].x,
+        height = rectanglePoints[1].y - rectanglePoints[0].y;
+
+    if (width < 0 || height < 0)
+    {
+        throw std::invalid_argument("Invalid width or height params");
+    }
+    char ch;
+    m_in.get(ch);
+    if (m_in.fail() || ch == '\n')
+    {
+        ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Blue };
+        sf::Vector2f leftTop(rectanglePoints[0].x, rectanglePoints[0].y);
+        CreateRectangle(leftTop, width, height, &style);
+        return;
+    }
+
+    throw std::invalid_argument("Too many arguments");
+}
+
+void CCanvas::ReadTriangleProperties()
+{
+    std::vector<sf::Vector2f> trianglePoints;
+    for (size_t i = 0; i < COUNT_OF_TRIANGLE_POINTS; i++)
+    {
+        std::string inp;
+        float pref, x, y;
+
+        m_in >> inp;
+
+        ParseInputString(inp, pref, x, y);
+
+        if (m_in.fail())
+        {
+            throw std::invalid_argument("Not enough arguments");
+        }
+        sf::Vector2f vec(x, y);
+        trianglePoints.push_back(vec);
+    }
+
+    char ch;
+    m_in.get(ch);
+    if (m_in.fail() || ch == '\n')
+    {
+        ShapeStyle style = ShapeStyle{ 5, sf::Color::Red, sf::Color::Magenta };
+        CreateTriangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], &style);
+        return;
+    }
+
+    throw std::invalid_argument("Too many arguments");
+}

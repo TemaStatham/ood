@@ -11,14 +11,23 @@ CRectangleBuilder::CRectangleBuilder(const std::vector<float>& params)
 
 void CRectangleBuilder::SetShape()
 {
-    CBuilder::SetShape(std::make_shared<CCircleDecorator>(
-        new CRectangleDecorator(std::make_shared<sf::RectangleShape>(
-            new sf::RectangleShape()),
+    auto rectangleShape = std::make_shared<sf::RectangleShape>();
+
+    rectangleShape->setSize(sf::Vector2f(m_width, m_height));
+    rectangleShape->setPosition(m_leftTop);
+
+    CRectangleDecorator rectangle(rectangleShape, m_leftTop, m_height, m_width);
+
+    CBuilder::SetShape(std::make_shared<CRectangleDecorator>(rectangle));
+
+    /*CBuilder::SetShape(std::make_shared<CCircleDecorator>(
+        new CRectangleDecorator(
+            std::make_shared<sf::RectangleShape>(sf::RectangleShape()),
             m_leftTop,
             m_height,
             m_width
         )
-    ));
+    ));*/
 }
 
 void CRectangleBuilder::SetPosition()

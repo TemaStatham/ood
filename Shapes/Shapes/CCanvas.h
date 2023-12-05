@@ -18,17 +18,12 @@
 #include "CChangeShapeOutlineColorVisitor.h"
 #include "CChangeShapeColorVisitor.h"
 #include "CMemento.h"
-#include "CLoaderShapesFromFile.h"
-#include "CLoaderShapesFromTextFile.h"
 
 class CCanvas {
 public:
-    CCanvas(sf::RenderWindow& window);
-    /*void CreateShape(const std::string& typeOfFigureAsString);
-    void CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style);
-    void CreateRectangle(sf::Vector2f leftTop, float width, float height, ShapeStyle* style);
-    void CreateTriangle(sf::Vector2f firstPoint, sf::Vector2f secondPoint, sf::Vector2f thirdPoint, ShapeStyle* style);*/
+    CCanvas(sf::RenderWindow& window, std::istream& in);
 
+    void CreateShape(const std::string& typeOfFigureAsString);
     void CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style);
     void CreateRectangle(sf::Vector2f leftTop, float width, float height, ShapeStyle* style);
     void CreateTriangle(sf::Vector2f firstPoint, sf::Vector2f secondPoint, sf::Vector2f thirdPoint, ShapeStyle* style);
@@ -67,29 +62,29 @@ public:
     void AddNewShape(std::shared_ptr<CShapeDecorator> shape);
 
 private:
-    /* using Handler = std::function<void()>;
-     using ActionMap = std::map<std::string, Handler>;*/
-     /*void ConfigureShape(std::shared_ptr<sf::Shape> shape, ShapeStyle* style);
-
-     void ParseInputString(const std::string& input, float& pref, float& num1, float& num2);
-     sf::Vector2f ParseCoordinate(const std::string& input);
-     float ParseRadius(const std::string& input);
-
-     void ReadCircleProperties();
-     void ReadRectangleProperties();
-     void ReadTriangleProperties();*/
+    using Handler = std::function<void()>;
+    using ActionMap = std::map<std::string, Handler>;
     void ConfigureShape(std::shared_ptr<sf::Shape> shape, ShapeStyle* style);
+
+    void ParseInputString(const std::string& input, float& pref, float& num1, float& num2);
+    sf::Vector2f ParseCoordinate(const std::string& input);
+    float ParseRadius(const std::string& input);
+
+    void ReadCircleProperties();
+    void ReadRectangleProperties();
+    void ReadTriangleProperties();
 
     std::vector<std::shared_ptr<CShapeDecorator>> m_shapes;
     std::vector<std::shared_ptr<CShapeDecorator>> m_selectedShapes;
 
+    std::istream& m_in;
     sf::RenderWindow& m_window;
 
     int m_indexCurrentShape = -1;
     sf::Vector2i m_cursorPosition;
     sf::Vector2f m_offsetCoordinates;
 
-    /*const ActionMap m_actionMap;*/
+    const ActionMap m_actionMap;
 
     std::stack<CMemento*> m_history;
 };

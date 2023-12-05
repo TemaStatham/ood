@@ -73,5 +73,4 @@ std::stringstream CRectangleDecorator::GetInfo() const
 
 CRectangleDecorator::~CRectangleDecorator()
 {
-
 };

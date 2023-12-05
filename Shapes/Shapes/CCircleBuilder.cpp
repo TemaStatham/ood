@@ -8,13 +8,21 @@ CCircleBuilder::CCircleBuilder(const std::vector<float>& params)
 
 void CCircleBuilder::SetShape()
 {
-    CBuilder::SetShape(std::make_shared<CCircleDecorator>(
-        new CCircleDecorator(std::make_shared<sf::CircleShape>(
-            new sf::CircleShape()),
-            m_center,
-            m_radius
-        )
-    ));
+    auto circleShape = std::make_shared<sf::CircleShape>();
+
+    circleShape->setPosition(m_center);
+    circleShape->setRadius(m_radius);
+
+    CCircleDecorator circle(circleShape, m_center, m_radius);
+
+    CBuilder::SetShape(std::make_shared<CCircleDecorator>(circle));
+    /* CBuilder::SetShape(std::make_shared<CCircleDecorator>(
+         new CCircleDecorator(
+             std::make_shared<sf::CircleShape>(sf::CircleShape()),
+             m_center,
+             m_radius
+         )
+     ));*/
 }
 
 void CCircleBuilder::SetPosition()

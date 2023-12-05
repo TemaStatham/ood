@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CShapeDecorator.h"
-#include <SFML/Graphics.hpp>
 
 class CCircleDecorator : public CShapeDecorator
 {

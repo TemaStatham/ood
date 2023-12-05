@@ -7,7 +7,7 @@ CCompositeBuilder::CCompositeBuilder(const std::vector<unsigned int>& params, co
 
 void CCompositeBuilder::SetShape()
 {
-    m_shape = std::make_shared<CComposite>(new CComposite());
+    m_shape = std::make_shared<CComposite>();
 
     for (auto shape : m_shapes)
     {

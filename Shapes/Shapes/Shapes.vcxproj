@@ -155,9 +155,9 @@
     <ClCompile Include="CFileSaver.cpp" />
     <ClCompile Include="CLoaderShapesFromBinaryFile.cpp" />
     <ClCompile Include="CLoaderShapesFromFile.cpp" />
+    <ClCompile Include="CLoaderShapesFromTextFile.cpp" />
     <ClCompile Include="CLoadShapesFromBinFileCommand.cpp" />
     <ClCompile Include="CLoadShapesFromTextFileCommand.cpp" />
-    <ClCompile Include="CLoaderShapesFromTextFile.cpp" />
     <ClCompile Include="CMemento.cpp" />
     <ClCompile Include="CRectangleBuilder.cpp" />
     <ClCompile Include="CRectangleCreateCommand.cpp" />
@@ -178,11 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBuilder.h" />
-    <ClInclude Include="CCompositeBuilder.h" />
-    <ClInclude Include="CDirector.h" />
-    <ClInclude Include="CRectangleBuilder.h" />
-    <ClInclude Include="CTriangleBuilder.h" />
-    <ClInclude Include="IBuilder.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCanvas.h" />
     <ClInclude Include="CApplication.h" />
@@ -201,34 +196,40 @@
     <ClInclude Include="CCircleCreateCommand.h" />
     <ClInclude Include="CCircleDecorator.h" />
     <ClInclude Include="CComposite.h" />
+    <ClInclude Include="CCompositeBuilder.h" />
+    <ClInclude Include="CDirector.h" />
     <ClInclude Include="CFileSaver.h" />
     <ClInclude Include="CLoaderShapesFromBinaryFile.h" />
     <ClInclude Include="CLoaderShapesFromFile.h" />
+    <ClInclude Include="CLoaderShapesFromTextFile.h" />
     <ClInclude Include="CLoadShapesFromBinFileCommand.h" />
     <ClInclude Include="CLoadShapesFromTextFileCommand.h" />
-    <ClInclude Include="CLoaderShapesFromTextFile.h" />
     <ClInclude Include="CMemento.h" />
+    <ClInclude Include="CRectangleBuilder.h" />
     <ClInclude Include="CRectangleCreateCommand.h" />
     <ClInclude Include="CRectangleDecorator.h" />
     <ClInclude Include="CSaveShapesToFileCommand.h" />
     <ClInclude Include="CSaveToBinFile.h" />
     <ClInclude Include="CSaveToTextFile.h" />
-    <ClInclude Include="ISaveFileStrategy.h" />
     <ClInclude Include="CSetColorCommand.h" />
     <ClInclude Include="CSetThicknessCommand.h" />
     <ClInclude Include="CShapeDecorator.h" />
     <ClInclude Include="CShapeController.h" />
     <ClInclude Include="CToolbar.h" />
+    <ClInclude Include="CTriangleBuilder.h" />
     <ClInclude Include="CTriangleCreateCommand.h" />
     <ClInclude Include="CTriangleDecorator.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="CUndoCommand.h" />
+    <ClInclude Include="IBuilder.h" />
     <ClInclude Include="ICommand.h" />
+    <ClInclude Include="ISaveFileStrategy.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="ShapeStyle.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Figures.txt" />
+    <Text Include="Load.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

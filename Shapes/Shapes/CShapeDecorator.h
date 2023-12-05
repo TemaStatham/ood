@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
-#include <sstream>
 
 
 class CShapeDecorator : public sf::Shape
@@ -35,8 +35,6 @@ public:
     bool IsSelected() const;
 
     virtual std::stringstream GetInfo() const = 0;
-
-
 
     virtual ~CShapeDecorator() = default;
 

@@ -1,5 +1,10 @@
 #include "CLoaderShapesFromBinaryFile.h"
 
+CLoaderShapesFromBinaryFile::CLoaderShapesFromBinaryFile(CCanvas* canvas)
+    :CLoaderShapesFromFile(canvas)
+{
+}
+
 void CLoaderShapesFromBinaryFile::Load(const std::string& fileName)
 {
     this->LoadShapesFromFile(fileName);

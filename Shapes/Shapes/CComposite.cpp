@@ -110,7 +110,3 @@ std::stringstream CComposite::GetInfo() const
 
     return sstream;
 }
-
-CComposite::~CComposite()
-{
-}

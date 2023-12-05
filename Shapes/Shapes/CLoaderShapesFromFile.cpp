@@ -16,7 +16,7 @@ CLoaderShapesFromFile::CLoaderShapesFromFile(CCanvas* canvas)
 
 void CLoaderShapesFromFile::LoadShapesFromFile(const std::string& fileName)
 {
-    /*auto stream = GetStringStream(fileName);
+    auto stream = GetStringStream(fileName);
 
     m_canvas->Reset();
 
@@ -31,20 +31,21 @@ void CLoaderShapesFromFile::LoadShapesFromFile(const std::string& fileName)
         }
         catch (const std::exception& e)
         {
-            std::cout << "Error: не удалось создать фигуру: " << e.what() << std::endl;
+            std::cout << "Error shape doesn`t create : " << e.what() << std::endl;
         }
-    }*/
+    }
 }
 
 void CLoaderShapesFromFile::CreateShape(const std::string& typeOfFigureAsString, std::stringstream& stream)
 {
-    /*if (typeOfFigureAsString == "CIRCLE:")
+    //std::cout << typeOfFigureAsString << std::endl;
+    if (typeOfFigureAsString == "CIRCLE:")
     {
         CreateCircle(stream);
         return;
     }
 
-    if (typeOfFigureAsString == "TRIANGLE")
+    if (typeOfFigureAsString == "TRIANGLE:")
     {
         CreateTriangle(stream);
         return;
@@ -56,20 +57,22 @@ void CLoaderShapesFromFile::CreateShape(const std::string& typeOfFigureAsString,
         return;
     }
 
-    if (typeOfFigureAsString == "COMPOUND")
+    if (typeOfFigureAsString == "COMPOSITE:")
     {
         CreateCompound(stream);
         return;
     }
 
-    throw std::invalid_argument("Unknown type of figure");*/
+    throw std::invalid_argument("Unknown type of figure");
 }
 
 void CLoaderShapesFromFile::CreateCircle(std::stringstream& stream)
 {
     auto params = GetParams(stream, 6);
 
-    m_director->SetBuilder(new CRectangleBuilder(params));
+    m_director->SetBuilder(new CCircleBuilder(params));
+
+    m_canvas->AddNewShape(m_director->GetShape());
 }
 
 void CLoaderShapesFromFile::CreateRectangle(std::stringstream& stream)
@@ -88,29 +91,48 @@ void CLoaderShapesFromFile::CreateTriangle(std::stringstream& stream)
 
 void CLoaderShapesFromFile::CreateCompound(std::stringstream& stream)
 {
-    /* auto params = GetParams(stream, 9);
+    auto params = GetParams(stream, 9);
 
-     m_director->SetBuilder(new CTriangleBuilder(params));*/
+    //m_director->SetBuilder(new CCompositeBuilder(params));
 }
 
 std::vector<float> CLoaderShapesFromFile::GetParams(std::stringstream& stream, size_t countParams)
 {
-    /*std::vector<float> params(countParams);
-    std::string line;
+    std::vector<float> params(countParams);
 
+    std::string line;
+    getline(stream, line);
+    //std::cout << line << std::endl;
+    std::stringstream ss(line);
     for (int i = 0; i < countParams; i++)
     {
-        stream << line;
-        params[i] = std::stof(line);
+        if (!(ss >> line))
+        {
+            throw std::invalid_argument("Not enough arguments");
+        }
+
+        try
+        {
+            params[i] = std::stof(line);
+        }
+        catch (const std::invalid_argument& e)
+        {
+            throw std::invalid_argument("Invalid argument: " + line);
+        }
+        catch (const std::out_of_range& e)
+        {
+            throw std::out_of_range("Out of range: " + line);
+        }
+
         line.clear();
     }
 
-    char ch;
+    /*char ch;
     stream.get(ch);
     if (!stream.fail() && ch != '\n')
     {
         throw std::invalid_argument("Too many arguments");
-    }
+    }*/
 
-    return params;*/
+    return params;
 }

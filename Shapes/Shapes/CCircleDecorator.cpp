@@ -59,7 +59,6 @@ std::stringstream CCircleDecorator::GetInfo() const
 
     return sstream;
 }
-
 CCircleDecorator::~CCircleDecorator()
 {
 }
