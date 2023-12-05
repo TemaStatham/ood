@@ -411,7 +411,7 @@ void CShapeController::Select(vector<std::shared_ptr<CShapeDecorator>>& selected
             {
                 m_shapes[i]->SetSelected(false);
                 index = -1;
-                vector<std::shared_ptr<CShapeDecorator>>::iterator it = find(selectedShapes.begin(), selectedShapes.end(), m_shapes[i]);
+                std::vector<std::shared_ptr<CShapeDecorator>>::iterator it = std::find(selectedShapes.begin(), selectedShapes.end(), m_shapes[i]);
                 if (it != selectedShapes.end())
                 {
                     selectedShapes.erase(it);

@@ -111,7 +111,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\study\ood\SFML-2.6.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;opengl32.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,21 +131,58 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CApplication.cpp" />
+    <ClCompile Include="CButton.cpp" />
+    <ClCompile Include="CCanvas.cpp" />
+    <ClCompile Include="CChangeCoordinatesOfShapeCommand.cpp" />
+    <ClCompile Include="CChangeCoordinatesOfShapeState.cpp" />
+    <ClCompile Include="CChangeOutlineThicknessCommand.cpp" />
+    <ClCompile Include="CChangeOutlineThicknessState.cpp" />
+    <ClCompile Include="CChangeShapeColorCommand.cpp" />
+    <ClCompile Include="CChangeShapeColorState.cpp" />
+    <ClCompile Include="CChangeShapeOutlineColorCommand.cpp" />
+    <ClCompile Include="CChangeShapeOutlineColorState.cpp" />
+    <ClCompile Include="CCircleCreateCommand.cpp" />
     <ClCompile Include="CCircleDecorator.cpp" />
     <ClCompile Include="CComposite.cpp" />
+    <ClCompile Include="CRectangleCreateCommand.cpp" />
     <ClCompile Include="CRectangleDecorator.cpp" />
+    <ClCompile Include="CSetColorCommand.cpp" />
+    <ClCompile Include="CSetThicknessCommand.cpp" />
     <ClCompile Include="CShapeDecorator.cpp" />
     <ClCompile Include="CShapeController.cpp" />
+    <ClCompile Include="CToolbar.cpp" />
+    <ClCompile Include="CTriangleCreateCommand.cpp" />
     <ClCompile Include="CTriangleDecorator.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CButton.h" />
+    <ClInclude Include="CCanvas.h" />
+    <ClInclude Include="CApplication.h" />
+    <ClInclude Include="CChangeCoordinatesOfShapeCommand.h" />
+    <ClInclude Include="CChangeCoordinatesOfShapeState.h" />
+    <ClInclude Include="CChangeOutlineThicknessCommand.h" />
+    <ClInclude Include="CChangeOutlineThicknessState.h" />
+    <ClInclude Include="CChangeShapeColorCommand.h" />
+    <ClInclude Include="CChangeShapeColorState.h" />
+    <ClInclude Include="CChangeShapeOutlineColorCommand.h" />
+    <ClInclude Include="CChangeShapeOutlineColorState.h" />
+    <ClInclude Include="CCircleCreateCommand.h" />
     <ClInclude Include="CCircleDecorator.h" />
     <ClInclude Include="CComposite.h" />
+    <ClInclude Include="CRectangleCreateCommand.h" />
     <ClInclude Include="CRectangleDecorator.h" />
+    <ClInclude Include="CSetColorCommand.h" />
+    <ClInclude Include="CSetThicknessCommand.h" />
     <ClInclude Include="CShapeDecorator.h" />
     <ClInclude Include="CShapeController.h" />
+    <ClInclude Include="CToolbar.h" />
+    <ClInclude Include="CTriangleCreateCommand.h" />
     <ClInclude Include="CTriangleDecorator.h" />
+    <ClInclude Include="CState.h" />
+    <ClInclude Include="ICommand.h" />
+    <ClInclude Include="ShapeStyle.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Figures.txt" />

@@ -24,6 +24,27 @@ void CComposite::SetPosition(float x, float y) {
     }
 }
 
+void CComposite::SetFillColor(sf::Color color)
+{
+    for (auto& shape : m_shapes) {
+        shape->SetFillColor(color);
+    }
+}
+
+void CComposite::SetOutlineColor(sf::Color color)
+{
+    for (auto& shape : m_shapes) {
+        shape->SetOutlineColor(color);
+    }
+}
+
+void CComposite::SetOutlineThickness(float thickness)
+{
+    for (auto& shape : m_shapes) {
+        shape->SetOutlineThickness(thickness);
+    }
+}
+
 void CComposite::Draw(sf::RenderWindow& window) {
     if (IsSelected()) {
         sf::FloatRect bounds = GetGlobalBounds();

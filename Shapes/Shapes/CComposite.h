@@ -18,6 +18,9 @@ public:
     void Remove(std::shared_ptr<CShapeDecorator> shape);
 
     void SetPosition(float x, float y) override;
+    void SetFillColor(sf::Color color) override;
+    void SetOutlineColor(sf::Color color) override;
+    void SetOutlineThickness(float thickness) override;
     void Draw(sf::RenderWindow& window) override;
 
     sf::FloatRect GetGlobalBounds() const override;

@@ -23,8 +23,12 @@ public:
     virtual void Draw(sf::RenderWindow& window);
     virtual void SetPosition(float x, float y);
 
-    virtual sf::FloatRect GetGlobalBounds() const ;
-    virtual sf::Vector2f GetPosition() const ;
+    virtual void SetFillColor(sf::Color color);
+    virtual void SetOutlineColor(sf::Color color);
+    virtual void SetOutlineThickness(float thickness);
+
+    virtual sf::FloatRect GetGlobalBounds() const;
+    virtual sf::Vector2f GetPosition() const;
 
     void SetSelected(bool flag);
     bool IsSelected() const;

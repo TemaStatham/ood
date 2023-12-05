@@ -1,17 +1,17 @@
 ﻿#include <iostream>
 #include <fstream>
-#include "CShapeController.h"
+#include "CApplication.h"
 
 const std::string INPUT_FILE_NAME = "Figures.txt";
 
 int main()
 {
     std::ifstream inF1(INPUT_FILE_NAME);
-    std::vector<std::shared_ptr<CShapeDecorator>> shapes;
 
-    CShapeController shapeController(shapes, inF1, std::cout);
+    sf::RenderWindow window(sf::VideoMode(1000, 800), "Visualization of shapes");
 
-    shapeController.Start();
+    CApplication* application = CApplication::GetInstance(inF1, std::cout, window);
+    application->Start();
 
     return 0;
 }

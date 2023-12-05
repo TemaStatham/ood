@@ -55,6 +55,21 @@ void CShapeDecorator::SetPosition(float x, float y)
     m_shape->setPosition(x, y);
 }
 
+void CShapeDecorator::SetFillColor(sf::Color color)
+{
+    m_shape->setFillColor(color);
+}
+
+void CShapeDecorator::SetOutlineColor(sf::Color color)
+{
+    m_shape->setOutlineColor(color);
+}
+
+void CShapeDecorator::SetOutlineThickness(float thickness)
+{
+    m_shape->setOutlineThickness(thickness);
+}
+
 sf::FloatRect CShapeDecorator::GetGlobalBounds() const
 {
     return m_shape->getGlobalBounds();
