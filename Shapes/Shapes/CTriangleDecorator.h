@@ -17,7 +17,7 @@ public:
     float GetPerimeter() const override;
     std::string ToString() const override;
 
-    void Draw(sf::RenderWindow& window) const override;
+    void Draw(sf::RenderWindow& window) override;
 
     sf::Vector2f GetVertex1() const;
     sf::Vector2f GetVertex2() const;

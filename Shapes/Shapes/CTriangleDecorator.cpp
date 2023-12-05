@@ -21,7 +21,7 @@ CTriangleDecorator::CTriangleDecorator(std::shared_ptr<sf::ConvexShape> shape,
 {
 };
 
-float CTriangleDecorator::GetArea() const
+float CTriangleDecorator::GetArea() const 
 {
     float halfOfPerimeter = GetPerimeter() / 2;
 
@@ -32,7 +32,7 @@ float CTriangleDecorator::GetArea() const
     float area = sqrt(halfOfPerimeter * (halfOfPerimeter - line1) * (halfOfPerimeter - line2) * (halfOfPerimeter - line3));
 
     return area;
-};
+}
 
 float CTriangleDecorator::GetPerimeter() const
 {
@@ -43,7 +43,7 @@ float CTriangleDecorator::GetPerimeter() const
     float perimeter = line1Size + line2Size + line3Size;
 
     return perimeter;
-};
+}
 
 std::string CTriangleDecorator::ToString() const
 {
@@ -53,16 +53,16 @@ std::string CTriangleDecorator::ToString() const
         << "  p: " << GetPerimeter() << "  s: " << GetArea() << "\n";
 
     return strm.str();
-};
+}
 
-void CTriangleDecorator::Draw(sf::RenderWindow& window) const
+void CTriangleDecorator::Draw(sf::RenderWindow& window)
 {
     CShapeDecorator::Draw(window);
-};
+}
 
 CTriangleDecorator::~CTriangleDecorator()
 {
-};
+}
 
 sf::Vector2f CTriangleDecorator::GetVertex1() const
 {

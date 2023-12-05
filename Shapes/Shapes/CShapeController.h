@@ -4,6 +4,7 @@
 #include "CRectangleDecorator.h"
 #include "CTriangleDecorator.h"
 #include "CShapeDecorator.h"
+#include "CComposite.h"
 #include <functional>
 #include <map>
 #include <memory>
@@ -46,7 +47,12 @@ private:
 
     void Draw();
 
-    std::vector<std::shared_ptr<CShapeDecorator>>& m_shapes;
+    void SetChoose(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index, sf::Vector2i pos, float& dX, float& dY);
+    void Select(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index, sf::Vector2i pos);
+    void Ungroup(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index);
+    void Group(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index);
+
+    std::vector<std::shared_ptr<CShapeDecorator>> m_shapes;
     std::istream& m_in;
     std::ostream& m_out;
 

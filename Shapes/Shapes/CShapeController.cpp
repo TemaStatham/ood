@@ -1,6 +1,8 @@
 #include "CShapeController.h"
 #include <algorithm>
 
+using namespace std;
+
 const int COUNT_OF_TRIANGLE_POINTS = 3;
 const int COUNT_OF_RECTANGLE_POINTS = 2;
 
@@ -271,26 +273,192 @@ void CShapeController::PrintToOut()
     }
 }
 
+using namespace sf;
+
 void CShapeController::Draw()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    window.setVerticalSyncEnabled(true);
 
+    int index = -1;
+    float dX = 0;
+    float dY = 0;
+
+    vector<std::shared_ptr<CShapeDecorator>> selectedShapes;
     while (window.isOpen())
     {
+        sf::Vector2i pos = sf::Mouse::getPosition(window);
+
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
+            {
                 window.close();
+            }
+
+            if (Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            {
+                if (event.type == Event::MouseButtonPressed)
+                {
+                    if (event.key.code == Mouse::Left)
+                    {
+                        for (size_t i = 0; i < m_shapes.size(); i++)
+                        {
+                            if (m_shapes[i]->GetGlobalBounds().contains(pos.x, pos.y))
+                            {
+                                m_shapes[i]->SetSelected(true);
+                                selectedShapes.push_back(m_shapes[i]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (event.type == Event::MouseButtonPressed)
+            {
+                if (event.key.code == Mouse::Left)
+                {
+                    SetChoose(selectedShapes, index, pos, dX, dY);
+                }
+
+                if (event.key.code == Mouse::Right)
+                {
+                    Select(selectedShapes, index, pos);
+                }
+            }
+
+            if (Keyboard::isKeyPressed(sf::Keyboard::LControl))
+            {
+                if (Keyboard::isKeyPressed(sf::Keyboard::G))
+                {
+                    Group(selectedShapes, index);
+                }
+            }
+            if (Keyboard::isKeyPressed(sf::Keyboard::LControl))
+            {
+                if (Keyboard::isKeyPressed(sf::Keyboard::U))
+                {
+                    Ungroup(selectedShapes, index);
+                }
+            }
+
+            if (event.type == Event::MouseButtonReleased)
+            {
+                if (event.key.code == Mouse::Left)
+                {
+                    index = -1;
+                }
+            }
         }
 
-        window.clear(sf::Color(250, 220, 100, 0));
-
-        for (auto& el : m_shapes)
+        if (index != -1 && m_shapes[index]->IsSelected())
         {
-            el->Draw(window);
+            m_shapes[index]->SetPosition(pos.x - dX, pos.y - dY);
         }
 
+        window.clear(sf::Color::Cyan);
+        for (size_t i = 0; i < m_shapes.size(); i++)
+        {
+            m_shapes[i]->Draw(window);
+        }
         window.display();
+
+    }
+
+}
+
+void CShapeController::SetChoose(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes,
+    int& index, sf::Vector2i pos, float& dX, float& dY)
+{
+    for (size_t i = 0; i < m_shapes.size(); i++)
+    {
+        if (m_shapes[i]->GetGlobalBounds().contains(pos.x, pos.y))
+        {
+            if (m_shapes[i]->IsSelected())
+            {
+                index = i;
+                dX = pos.x - m_shapes[i]->GetPosition().x;
+                dY = pos.y - m_shapes[i]->GetPosition().y;
+            }
+            else
+            {
+                index = i;
+                m_shapes[i]->SetSelected(true);
+                selectedShapes.clear();
+                selectedShapes.push_back(m_shapes[i]);
+                dX = pos.x - m_shapes[i]->GetPosition().x;
+                dY = pos.y - m_shapes[i]->GetPosition().y;
+                for (size_t j = 0; j < m_shapes.size(); j++)
+                {
+                    if (j != i)
+                    {
+                        m_shapes[j]->SetSelected(false);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void CShapeController::Select(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index, sf::Vector2i pos)
+{
+    for (size_t i = 0; i < m_shapes.size(); i++)
+    {
+        if (m_shapes[i]->GetGlobalBounds().contains(pos.x, pos.y))
+        {
+            if (m_shapes[i]->IsSelected())
+            {
+                m_shapes[i]->SetSelected(false);
+                index = -1;
+                vector<std::shared_ptr<CShapeDecorator>>::iterator it = find(selectedShapes.begin(), selectedShapes.end(), m_shapes[i]);
+                if (it != selectedShapes.end())
+                {
+                    selectedShapes.erase(it);
+                }
+            }
+        }
+    }
+}
+
+void CShapeController::Ungroup(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index)
+{
+    if (selectedShapes.size() == 1)
+    {
+        std::shared_ptr<CComposite> compoundFigure = std::static_pointer_cast<CComposite>(selectedShapes.front());;
+        list<std::shared_ptr<CShapeDecorator>> figures = compoundFigure->GetShapes();
+
+        vector<std::shared_ptr<CShapeDecorator>>::iterator itShapes = find(m_shapes.begin(), m_shapes.end(), compoundFigure);
+        if (itShapes != m_shapes.end())
+        {
+            m_shapes.erase(itShapes);
+        }
+        for (std::shared_ptr<CShapeDecorator> figure : figures)
+        {
+            m_shapes.push_back(figure);
+        }
+        selectedShapes.clear();
+        index = -1;
+    }
+}
+
+void CShapeController::Group(vector<std::shared_ptr<CShapeDecorator>>& selectedShapes, int& index)
+{
+    if (!selectedShapes.empty())
+    {
+        std::shared_ptr<CComposite> compoundFigure = std::make_shared<CComposite>();
+        for (std::shared_ptr<CShapeDecorator> figure : selectedShapes)
+        {
+            compoundFigure->Add(figure);
+            auto itShapes = find(m_shapes.begin(), m_shapes.end(), figure);
+            if (itShapes != m_shapes.end())
+            {
+                m_shapes.erase(itShapes);
+            }
+        }
+        selectedShapes.clear();
+        index = -1;
+
+        m_shapes.push_back(compoundFigure);
     }
 }

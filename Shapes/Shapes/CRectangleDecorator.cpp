@@ -31,12 +31,12 @@ std::string CRectangleDecorator::ToString() const
         << "  s: " << GetArea() << "\n";
 
     return strm.str();
-};
+}
 
-void CRectangleDecorator::Draw(sf::RenderWindow& window) const
+void CRectangleDecorator::Draw(sf::RenderWindow& window)
 {
     CShapeDecorator::Draw(window);
-};
+}
 
 sf::Vector2f CRectangleDecorator::GetLeftTop() const
 {

@@ -36,12 +36,12 @@ std::string CCircleDecorator::ToString() const
         << "  s: " << GetArea() << "\n";
 
     return strm.str();
-};
+}
 
-void CCircleDecorator::Draw(sf::RenderWindow& window) const
+void CCircleDecorator::Draw(sf::RenderWindow& window)
 {
     CShapeDecorator::Draw(window);
-};
+}
 
 float CCircleDecorator::GetRadius() const
 {
