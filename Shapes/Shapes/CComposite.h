@@ -28,6 +28,10 @@ public:
 
     list<std::shared_ptr<CShapeDecorator>> GetShapes() const;
 
+    std::stringstream GetInfo() const override;
+
+    ~CComposite();
+
 private:
     list<std::shared_ptr<CShapeDecorator>> m_shapes;
 };

@@ -59,6 +59,19 @@ float CRectangleDecorator::GetWidth() const
     return m_width;
 }
 
+std::stringstream CRectangleDecorator::GetInfo() const
+{
+    std::stringstream sstream;
+
+    sstream << "RECTANGLE: "
+        << "P1=" << m_leftTop.x << "," << m_leftTop.y << "; "
+        << "P2=" << m_leftTop.x + m_width << "," << m_leftTop.y - m_heigth << ";"
+        << std::endl;
+
+    return sstream;
+}
+
 CRectangleDecorator::~CRectangleDecorator()
 {
+
 };

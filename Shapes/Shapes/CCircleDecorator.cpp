@@ -48,6 +48,18 @@ float CCircleDecorator::GetRadius() const
     return m_radius;
 }
 
+std::stringstream CCircleDecorator::GetInfo() const
+{
+    std::stringstream sstream;
+
+    sstream << "CIRCLE: "
+        << "C=" << m_center.x << "," << m_center.y << "; "
+        << "R=" << m_radius << ";"
+        << std::endl;
+
+    return sstream;
+}
+
 CCircleDecorator::~CCircleDecorator()
 {
 }

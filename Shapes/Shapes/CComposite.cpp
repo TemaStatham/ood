@@ -95,3 +95,22 @@ sf::Vector2f CComposite::GetPosition() const {
 list<std::shared_ptr<CShapeDecorator>> CComposite::GetShapes() const {
     return m_shapes;
 }
+
+std::stringstream CComposite::GetInfo() const
+{
+    std::stringstream sstream;
+
+    sstream << "COMPOSIT: " << m_shapes.size() << std::endl;
+
+    for (auto shape : m_shapes)
+    {
+        auto shapeStream = shape->GetInfo();
+        sstream << shapeStream.str();
+    }
+
+    return sstream;
+}
+
+CComposite::~CComposite()
+{
+}

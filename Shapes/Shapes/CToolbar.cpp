@@ -16,10 +16,11 @@ const sf::Vector2f TRIANGLE_FIRST_POINT = sf::Vector2f{ 10, 500 };
 const sf::Vector2f TRIANGLE_SECOND_POINT = sf::Vector2f{ 140, 300 };
 const sf::Vector2f TRIANGLE_THIRD_POINT = sf::Vector2f{ 40, 190 };
 
-CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas)
+CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas, CFileSaver* fileSaver)
     : m_window(window),
     m_state(state),
-    m_canvas(canvas)
+    m_canvas(canvas),
+    m_fileSaver(fileSaver)
 {
     m_buttons.push_back(new CButton(
         "coordinates",
@@ -126,6 +127,38 @@ CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas)
         sf::Vector2f(120, 40),
         new CUndoCommand(this)
     ));
+
+    m_buttons.push_back(new CButton(
+        "Save to txt",
+        sf::Color::Green,
+        sf::Vector2f(930, 60),
+        sf::Vector2f(120, 40),
+        new CSaveShapesToFileCommand(this, new CSaveToTextFile())
+    ));
+
+    m_buttons.push_back(new CButton(
+        "Save to bin",
+        sf::Color::Green,
+        sf::Vector2f(930, 110),
+        sf::Vector2f(120, 40),
+        new CSaveShapesToFileCommand(this, new CSaveToBinFile())
+    ));
+
+    m_buttons.push_back(new CButton(
+        "Load from txt",
+        sf::Color::Green,
+        sf::Vector2f(930, 160),
+        sf::Vector2f(120, 40),
+        new CLoadShapesFromTextFileCommand(this)
+    ));
+
+    m_buttons.push_back(new CButton(
+        "Load from bin",
+        sf::Color::Green,
+        sf::Vector2f(930, 210),
+        sf::Vector2f(120, 40),
+        new CLoadShapesFromTextFileCommand(this)
+    ));
 }
 
 void CToolbar::ChangeShapeColor()
@@ -229,4 +262,20 @@ std::vector<CButton*> CToolbar::GetButtons() const
 void CToolbar::Undo()
 {
     m_canvas->Undo();
+}
+
+void CToolbar::Save(const std::string& fileName, ISaveFileStrategy* strategy)
+{
+    m_fileSaver->SetStrategy(strategy);
+    m_fileSaver->Save(fileName);
+}
+
+void CToolbar::LoadFromTextFile(const std::string& fileName)
+{
+    m_textLoader->Load(fileName);
+}
+
+void CToolbar::LoadFromBinFile(const std::string& fileName)
+{
+    m_binLoader->Load(fileName);
 }

@@ -22,6 +22,8 @@ public:
     float GetHeigth() const;
     float GetWidth() const;
 
+    std::stringstream GetInfo() const override;
+
     ~CRectangleDecorator();
 
 private:

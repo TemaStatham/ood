@@ -23,6 +23,8 @@ public:
     sf::Vector2f GetVertex2() const;
     sf::Vector2f GetVertex3() const;
 
+    std::stringstream GetInfo() const override;
+
     ~CTriangleDecorator();
 private:
 

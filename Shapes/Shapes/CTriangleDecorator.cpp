@@ -78,3 +78,16 @@ sf::Vector2f CTriangleDecorator::GetVertex3() const
 {
     return m_vertex3;
 }
+
+std::stringstream CTriangleDecorator::GetInfo() const
+{
+    std::stringstream sstream;
+
+    sstream << "TRIANGLE: "
+        << "P1=" << m_vertex1.x << "," << m_vertex1.y << "; "
+        << "P2=" << m_vertex2.x << "," << m_vertex2.y << "; "
+        << "P3=" << m_vertex3.x << "," << m_vertex3.y << ";"
+        << std::endl;
+
+    return sstream;
+}

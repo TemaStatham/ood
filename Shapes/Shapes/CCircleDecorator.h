@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CShapeDecorator.h"
+#include <SFML/Graphics.hpp>
 
 class CCircleDecorator : public CShapeDecorator
 {
@@ -19,6 +20,7 @@ public:
     sf::Vector2f GetCenter() const;
     float GetRadius() const;
 
+    std::stringstream GetInfo() const override;
 
     ~CCircleDecorator();
 
