@@ -47,6 +47,7 @@ float CCircleDecorator::GetRadius() const
 {
     return m_radius;
 }
+
 CCircleDecorator::~CCircleDecorator()
 {
 }

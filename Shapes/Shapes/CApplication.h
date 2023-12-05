@@ -3,27 +3,30 @@
 #include <SFML/Graphics.hpp>
 #include "CCanvas.h"
 #include "CToolbar.h"
+#include "CChangeOutlineThicknessVisitor.h"
+#include "CChangeShapeOutlineColorVisitor.h"
+#include "CChangeShapeColorVisitor.h"
 
 class CApplication {
 public:
-	static CApplication* GetInstance(std::istream& input, std::ostream& output, sf::RenderWindow& window);
+    static CApplication* GetInstance(std::istream& input, std::ostream& output, sf::RenderWindow& window);
 
-	void Start();
+    void Start();
 
 private:
-	CApplication(istream& input, ostream& output, sf::RenderWindow& window);
+    CApplication(istream& input, ostream& output, sf::RenderWindow& window);
 
-	void Read();
-	void Write();
-	void HandleEvent(sf::Event event);
+    void Read();
+    void Write();
+    void HandleEvent(sf::Event event);
 
-	static CApplication* m_instance;
+    static CApplication* m_instance;
 
-	std::istream& m_in;
-	std::ostream& m_out;
+    std::istream& m_in;
+    std::ostream& m_out;
 
-	sf::RenderWindow& m_window;
+    sf::RenderWindow& m_window;
 
-	CCanvas* m_canvas;
-	CToolbar* m_toolbar;
+    CCanvas* m_canvas;
+    CToolbar* m_toolbar;
 };

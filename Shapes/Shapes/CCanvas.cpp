@@ -46,6 +46,7 @@ void CCanvas::CreateShape(const std::string& typeOfFigureAsString)
 
 void CCanvas::CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style)
 {
+    Backup();
     auto circleShape = std::make_shared<sf::CircleShape>();
 
     circleShape->setPosition(center);
@@ -60,6 +61,7 @@ void CCanvas::CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style)
 
 void CCanvas::CreateRectangle(sf::Vector2f leftTop, float width, float height, ShapeStyle* style)
 {
+    Backup();
     auto rectangleShape = std::make_shared<sf::RectangleShape>();
 
     rectangleShape->setSize(sf::Vector2f(width, height));
@@ -74,6 +76,7 @@ void CCanvas::CreateRectangle(sf::Vector2f leftTop, float width, float height, S
 
 void CCanvas::CreateTriangle(sf::Vector2f firstPoint, sf::Vector2f secondPoint, sf::Vector2f thirdPoint, ShapeStyle* style)
 {
+    Backup();
     auto triangleShape = std::make_shared<sf::ConvexShape>();
 
     triangleShape->setPointCount(3);
@@ -94,6 +97,7 @@ void CCanvas::ChangeShapeColor(sf::Color color)
     {
         if (shape->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             shape->SetFillColor(color);
         }
     }
@@ -105,6 +109,7 @@ void CCanvas::ChangeShapeOutlineColor(sf::Color color)
     {
         if (shape->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             shape->SetOutlineColor(color);
         }
     }
@@ -116,6 +121,7 @@ void CCanvas::ChangeOutlineThickness(float thickness)
     {
         if (shape->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             shape->SetOutlineThickness(thickness);
         }
     }
@@ -125,6 +131,7 @@ void CCanvas::ChangeCoordinatesOfShape()
 {
     if (m_indexCurrentShape != -1 && m_shapes[m_indexCurrentShape]->IsSelected())
     {
+        Backup();
         m_shapes[m_indexCurrentShape]->SetPosition(m_cursorPosition.x - m_offsetCoordinates.x, m_cursorPosition.y - m_offsetCoordinates.y);
     }
 }
@@ -145,6 +152,7 @@ void CCanvas::AddNewSelectedShape()
     {
         if (m_shapes[i]->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             m_shapes[i]->SetSelected(true);
             m_selectedShapes.push_back(m_shapes[i]);
         }
@@ -187,6 +195,7 @@ void CCanvas::SelectOneMoreShape()
     {
         if (m_shapes[i]->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             m_shapes[i]->SetSelected(true);
             m_selectedShapes.push_back(m_shapes[i]);
         }
@@ -199,6 +208,7 @@ void CCanvas::SetChoose()
     {
         if (m_shapes[i]->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
         {
+            Backup();
             if (m_shapes[i]->IsSelected())
             {
                 m_indexCurrentShape = i;
@@ -244,6 +254,7 @@ void CCanvas::Select()
         {
             if (m_shapes[i]->IsSelected())
             {
+                Backup();
                 m_shapes[i]->SetSelected(false);
                 m_indexCurrentShape = -1;
                 vector<std::shared_ptr<CShapeDecorator>>::iterator it = std::find(m_selectedShapes.begin(), m_selectedShapes.end(), m_shapes[i]);
@@ -254,6 +265,35 @@ void CCanvas::Select()
             }
         }
     }
+}
+
+void CCanvas::Accept(IVisitor* visitor)
+{
+    for (auto shape : m_shapes)
+    {
+        if (shape->GetGlobalBounds().contains(m_cursorPosition.x, m_cursorPosition.y))
+        {
+            visitor->VisitShape(shape.get());
+        }
+    }
+}
+void CCanvas::Backup()
+{
+    m_history.push(new CMemento(m_shapes, m_selectedShapes));
+}
+void CCanvas::Undo()
+{
+    if (m_history.size() == 0)
+    {
+        return;
+    }
+
+    m_shapes = m_history.top()->GetShapes();
+    m_selectedShapes = m_history.top()->GetSelectedShapes();
+    m_indexCurrentShape = -1;
+    m_cursorPosition = sf::Vector2i(0, 0);
+    m_offsetCoordinates = sf::Vector2f(0, 0);
+    m_history.pop();
 }
 
 void CCanvas::SelectMultipleShape()

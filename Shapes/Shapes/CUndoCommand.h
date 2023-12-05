@@ -3,9 +3,9 @@
 #include "ICommand.h"
 #include "CToolbar.h"
 
-class CChangeCoordinatesOfShapeCommand : public ICommand {
+class CUndoCommand : public ICommand {
 public:
-    CChangeCoordinatesOfShapeCommand(CToolbar* reciever);
+    CUndoCommand(CToolbar* reciever);
     void Execute() const override;
 private:
     CToolbar* m_toolbar;

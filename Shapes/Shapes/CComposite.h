@@ -27,6 +27,7 @@ public:
     sf::Vector2f GetPosition() const override;
 
     list<std::shared_ptr<CShapeDecorator>> GetShapes() const;
+
 private:
     list<std::shared_ptr<CShapeDecorator>> m_shapes;
 };

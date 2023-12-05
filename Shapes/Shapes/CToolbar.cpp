@@ -58,7 +58,6 @@ CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas)
         new CSetThicknessCommand(this, 3)
     ));
 
-
     m_buttons.push_back(new CButton(
         "color",
         sf::Color::Cyan,
@@ -118,6 +117,14 @@ CToolbar::CToolbar(sf::RenderWindow& window, CState* state, CCanvas* canvas)
         sf::Vector2f(800, 10),
         sf::Vector2f(120, 40),
         new CTriangleCreateCommand(this)
+    ));
+
+    m_buttons.push_back(new CButton(
+        "Undo",
+        sf::Color::Green,
+        sf::Vector2f(930, 10),
+        sf::Vector2f(120, 40),
+        new CUndoCommand(this)
     ));
 }
 
@@ -214,7 +221,12 @@ float CToolbar::GetSelectedThickness() const
     return m_selectedThickness;
 }
 
-vector<CButton*> CToolbar::GetButtons() const
+std::vector<CButton*> CToolbar::GetButtons() const
 {
     return m_buttons;
+}
+
+void CToolbar::Undo()
+{
+    m_canvas->Undo();
 }

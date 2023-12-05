@@ -14,6 +14,7 @@
 #include "CCircleCreateCommand.h"
 #include "CRectangleCreateCommand.h"
 #include "CTriangleCreateCommand.h"
+#include "CUndoCommand.h"
 
 class CState;
 
@@ -43,6 +44,8 @@ public:
     sf::Color GetSelectedColor() const;
     float GetSelectedThickness() const;
     vector<CButton*> GetButtons() const;
+
+    void Undo();
 
 private:
     sf::RenderWindow& m_window;

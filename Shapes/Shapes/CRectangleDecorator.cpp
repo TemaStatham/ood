@@ -57,7 +57,7 @@ float CRectangleDecorator::GetHeigth() const
 float CRectangleDecorator::GetWidth() const
 {
     return m_width;
-};
+}
 
 CRectangleDecorator::~CRectangleDecorator()
 {

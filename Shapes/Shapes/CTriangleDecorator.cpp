@@ -21,7 +21,7 @@ CTriangleDecorator::CTriangleDecorator(std::shared_ptr<sf::ConvexShape> shape,
 {
 };
 
-float CTriangleDecorator::GetArea() const 
+float CTriangleDecorator::GetArea() const
 {
     float halfOfPerimeter = GetPerimeter() / 2;
 
@@ -77,4 +77,4 @@ sf::Vector2f CTriangleDecorator::GetVertex2() const
 sf::Vector2f CTriangleDecorator::GetVertex3() const
 {
     return m_vertex3;
-};
+}

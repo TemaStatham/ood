@@ -19,6 +19,7 @@ public:
     sf::Vector2f GetCenter() const;
     float GetRadius() const;
 
+
     ~CCircleDecorator();
 
 private:

@@ -8,7 +8,7 @@ int main()
 {
     std::ifstream inF1(INPUT_FILE_NAME);
 
-    sf::RenderWindow window(sf::VideoMode(1000, 800), "Visualization of shapes");
+    sf::RenderWindow window(sf::VideoMode(1100, 900), "Visualization of shapes");
 
     CApplication* application = CApplication::GetInstance(inF1, std::cout, window);
     application->Start();

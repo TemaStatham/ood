@@ -138,13 +138,17 @@
     <ClCompile Include="CChangeCoordinatesOfShapeState.cpp" />
     <ClCompile Include="CChangeOutlineThicknessCommand.cpp" />
     <ClCompile Include="CChangeOutlineThicknessState.cpp" />
+    <ClCompile Include="CChangeOutlineThicknessVisitor.cpp" />
     <ClCompile Include="CChangeShapeColorCommand.cpp" />
     <ClCompile Include="CChangeShapeColorState.cpp" />
+    <ClCompile Include="CChangeShapeColorVisitor.cpp" />
     <ClCompile Include="CChangeShapeOutlineColorCommand.cpp" />
     <ClCompile Include="CChangeShapeOutlineColorState.cpp" />
+    <ClCompile Include="CChangeShapeOutlineColorVisitor.cpp" />
     <ClCompile Include="CCircleCreateCommand.cpp" />
     <ClCompile Include="CCircleDecorator.cpp" />
     <ClCompile Include="CComposite.cpp" />
+    <ClCompile Include="CMemento.cpp" />
     <ClCompile Include="CRectangleCreateCommand.cpp" />
     <ClCompile Include="CRectangleDecorator.cpp" />
     <ClCompile Include="CSetColorCommand.cpp" />
@@ -154,6 +158,7 @@
     <ClCompile Include="CToolbar.cpp" />
     <ClCompile Include="CTriangleCreateCommand.cpp" />
     <ClCompile Include="CTriangleDecorator.cpp" />
+    <ClCompile Include="CUndoCommand.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,13 +169,17 @@
     <ClInclude Include="CChangeCoordinatesOfShapeState.h" />
     <ClInclude Include="CChangeOutlineThicknessCommand.h" />
     <ClInclude Include="CChangeOutlineThicknessState.h" />
+    <ClInclude Include="CChangeOutlineThicknessVisitor.h" />
     <ClInclude Include="CChangeShapeColorCommand.h" />
     <ClInclude Include="CChangeShapeColorState.h" />
+    <ClInclude Include="CChangeShapeColorVisitor.h" />
     <ClInclude Include="CChangeShapeOutlineColorCommand.h" />
     <ClInclude Include="CChangeShapeOutlineColorState.h" />
+    <ClInclude Include="CChangeShapeOutlineColorVisitor.h" />
     <ClInclude Include="CCircleCreateCommand.h" />
     <ClInclude Include="CCircleDecorator.h" />
     <ClInclude Include="CComposite.h" />
+    <ClInclude Include="CMemento.h" />
     <ClInclude Include="CRectangleCreateCommand.h" />
     <ClInclude Include="CRectangleDecorator.h" />
     <ClInclude Include="CSetColorCommand.h" />
@@ -181,7 +190,9 @@
     <ClInclude Include="CTriangleCreateCommand.h" />
     <ClInclude Include="CTriangleDecorator.h" />
     <ClInclude Include="CState.h" />
+    <ClInclude Include="CUndoCommand.h" />
     <ClInclude Include="ICommand.h" />
+    <ClInclude Include="IVisitor.h" />
     <ClInclude Include="ShapeStyle.h" />
   </ItemGroup>
   <ItemGroup>

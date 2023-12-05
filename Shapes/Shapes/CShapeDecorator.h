@@ -5,9 +5,9 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Shape.hpp>
 
-class CShapeDecorator : sf::Shape
+
+class CShapeDecorator : public sf::Shape
 {
 public:
     CShapeDecorator();

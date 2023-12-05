@@ -101,15 +101,18 @@ void CApplication::HandleEvent(sf::Event event)
                 }
                 else if (typeid(*m_toolbar->GetState()) == typeid(CChangeOutlineThicknessState))
                 {
-                    m_canvas->ChangeOutlineThickness(m_toolbar->GetSelectedThickness());
+                    //m_canvas->ChangeOutlineThickness(m_toolbar->GetSelectedThickness());
+                    m_canvas->Accept(new CChangeOutlineThicknessVisitor(m_toolbar->GetSelectedThickness()));
                 }
                 else if (typeid(*m_toolbar->GetState()) == typeid(CChangeShapeColorState))
                 {
-                    m_canvas->ChangeShapeColor(m_toolbar->GetSelectedColor());
+                    //m_canvas->ChangeShapeColor(m_toolbar->GetSelectedColor());
+                    m_canvas->Accept(new CChangeShapeColorVisitor(m_toolbar->GetSelectedColor()));
                 }
                 else if (typeid(*m_toolbar->GetState()) == typeid(CChangeShapeOutlineColorState))
                 {
-                    m_canvas->ChangeShapeOutlineColor(m_toolbar->GetSelectedColor());
+                    //m_canvas->ChangeShapeOutlineColor(m_toolbar->GetSelectedColor());
+                    m_canvas->Accept(new CChangeShapeOutlineColorVisitor(m_toolbar->GetSelectedColor()));
                 }
 
                 if (m_toolbar->PressedToButton())

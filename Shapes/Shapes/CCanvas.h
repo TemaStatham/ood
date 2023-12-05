@@ -4,6 +4,7 @@
 #include <functional>
 #include <regex>
 #include <map>
+#include <stack>
 
 #include "CShapeDecorator.h"
 #include "CShapeDecorator.h"
@@ -12,11 +13,15 @@
 #include "CTriangleDecorator.h"
 #include "CComposite.h"
 #include "ShapeStyle.h"
+#include "IVisitor.h"
+#include "CChangeOutlineThicknessVisitor.h"
+#include "CChangeShapeOutlineColorVisitor.h"
+#include "CChangeShapeColorVisitor.h"
+#include "CMemento.h"
 
 class CCanvas {
 public:
     CCanvas(sf::RenderWindow& window, std::istream& in);
-
     void CreateShape(const std::string& typeOfFigureAsString);
     void CreateCircle(sf::Vector2f center, float radius, ShapeStyle* style);
     void CreateRectangle(sf::Vector2f leftTop, float width, float height, ShapeStyle* style);
@@ -46,6 +51,11 @@ public:
     void SetChoose();
     void Select();
 
+    void Accept(IVisitor* visitor);
+
+    void Backup();
+    void Undo();
+
 private:
     using Handler = std::function<void()>;
     using ActionMap = std::map<std::string, Handler>;
@@ -70,4 +80,6 @@ private:
     sf::Vector2f m_offsetCoordinates;
 
     const ActionMap m_actionMap;
+
+    std::stack<CMemento*> m_history;
 };
