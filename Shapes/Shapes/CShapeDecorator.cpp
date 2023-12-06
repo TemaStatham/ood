@@ -82,6 +82,9 @@ sf::Vector2f CShapeDecorator::GetPosition() const
 
 void CShapeDecorator::SetSelected(bool flag)
 {
+    if (this == nullptr) {
+        return;
+    }
     m_selected = flag;
 }
 

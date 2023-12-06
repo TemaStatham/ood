@@ -301,8 +301,8 @@ void CCanvas::Reset()
     m_indexCurrentShape = 0;
     m_cursorPosition = sf::Vector2i(0, 0);
     m_offsetCoordinates = sf::Vector2f(0, 0);
-    m_shapes = std::vector<std::shared_ptr<CShapeDecorator>>{};
-    m_selectedShapes = std::vector<std::shared_ptr<CShapeDecorator>>{};
+    m_shapes.clear();
+    m_selectedShapes.clear();
 }
 
 void CCanvas::AddNewShape(std::shared_ptr<CShapeDecorator> shape)
